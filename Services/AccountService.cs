@@ -13,9 +13,32 @@ public class AccountService
   {
     this.context = context;
   }
-  public async Task<IEnumerable<Account>> GetAll () => await context.Accounts.ToListAsync();
+  public async Task<IEnumerable<AccountResponseDTO>> GetAll ()
+  {
+    return await context.Accounts.Select(account => new AccountResponseDTO()
+    {
+      Id = account.Id,
+      AccountName = account.AccountTypeNavigation.Name,
+      ClientName = account.Client != null ? account.Client.Name : "" ,
+      Balance = account.Balance,
+      RegDate = account.RegDate
+    }).ToListAsync();
+  }
+    public async Task<AccountResponseDTO?> GetDTOById (int id)
+  {
+    return await context.Accounts
+      .Where(account => account.Id == id)
+      .Select(account => new AccountResponseDTO()
+      {
+        Id = account.Id,
+        AccountName = account.AccountTypeNavigation.Name,
+        ClientName = account.Client != null ? account.Client.Name : "" ,
+        Balance = account.Balance,
+        RegDate = account.RegDate
+      }).SingleOrDefaultAsync();
+  }
   public async Task<Account?> GetById (int id) => await context.Accounts.FindAsync(id);
-  public async Task<Account> Create (AccountDTO account)
+  public async Task<Account> Create (AccountRequestDTO account)
   {
     Account newAccount = new Account()
     {
@@ -30,7 +53,7 @@ public class AccountService
 
     return newAccount;
   }
-  public async void Update (AccountDTO account, Account accountToUpdate)
+  public async void Update (AccountRequestDTO account, Account accountToUpdate)
   {
     accountToUpdate.AccountType = account.AccountType;
     accountToUpdate.ClientId = account.ClientId;

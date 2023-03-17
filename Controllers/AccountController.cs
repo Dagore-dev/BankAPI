@@ -19,18 +19,18 @@ public class AccountController : ControllerBase
     this.accountTypeService = accountTypeService;
   }
   [HttpGet]
-  public async Task<IEnumerable<Account>> Get () => await accountService.GetAll();
+  public async Task<IEnumerable<AccountResponseDTO>> Get () => await accountService.GetAll();
   [HttpGet("{id}")]
-  public async Task<ActionResult<Account?>> GetById (int id)
+  public async Task<ActionResult<AccountResponseDTO?>> GetById (int id)
   {
-    Account? account = await accountService.GetById(id);
+    AccountResponseDTO? account = await accountService.GetDTOById(id);
     if (account is null)
       return AccountNotFound(id);
     
     return account;
   }
   [HttpPost]
-  public async Task<IActionResult> Create (AccountDTO account)
+  public async Task<IActionResult> Create (AccountRequestDTO account)
   {
     string validationResult = await ValidateAccount(account);
     if (validationResult != "Valid")
@@ -40,7 +40,7 @@ public class AccountController : ControllerBase
     return CreatedAtAction(nameof(GetById), new { id = accountCreated.Id }, accountCreated);
   }
   [HttpPut("{id}")]
-  public async Task<IActionResult> Update (int id, AccountDTO account)
+  public async Task<IActionResult> Update (int id, AccountRequestDTO account)
   {
     if (id != account.Id)
       return BadRequest(new { message = "URI id and payload id doesn't match" });    
@@ -71,7 +71,7 @@ public class AccountController : ControllerBase
   {
     return NotFound(new { message = $"Account with id = {id} not found" });
   }
-  async Task<string> ValidateAccount (AccountDTO account)
+  async Task<string> ValidateAccount (AccountRequestDTO account)
   {
     AccountType? accountType = await accountTypeService.GetById(account.AccountType);
     if (accountType is null)
