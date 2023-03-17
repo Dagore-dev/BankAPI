@@ -21,7 +21,7 @@ public class ClientService
 
     return client;
   }
-  public async void Update (int id, Client client, Client clientToUpdate)
+  public async void Update (Client client, Client clientToUpdate)
   {    
     clientToUpdate.Name = client.Name;
     clientToUpdate.PhoneNumber = client.PhoneNumber;

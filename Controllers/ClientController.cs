@@ -41,7 +41,7 @@ public class ClientController : ControllerBase
     if (clientToUpdate is null)
       return ClientNotFound(id);
 
-    clientService.Update(id, client, clientToUpdate);
+    clientService.Update(client, clientToUpdate);
     return NoContent();
   }
   [HttpDelete("{id}")]

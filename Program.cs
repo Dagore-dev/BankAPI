@@ -17,6 +17,8 @@ internal class Program
     builder.Services.AddSwaggerGen();
     builder.Services.AddSqlServer<BankContext>(builder.Configuration.GetConnectionString("BankConnection"));
     builder.Services.AddScoped<ClientService>();
+    builder.Services.AddScoped<AccountService>();
+    builder.Services.AddScoped<AccountTypeService>();
 
     var app = builder.Build();
 
