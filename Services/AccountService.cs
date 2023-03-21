@@ -53,7 +53,7 @@ public class AccountService
 
     return newAccount;
   }
-  public async void Update (AccountRequestDTO account, Account accountToUpdate)
+  public async Task Update (AccountRequestDTO account, Account accountToUpdate)
   {
     accountToUpdate.AccountType = account.AccountType;
     accountToUpdate.ClientId = account.ClientId;
@@ -61,7 +61,7 @@ public class AccountService
 
     await context.SaveChangesAsync();
   }
-  public async void Delete (Account account)
+  public async Task Delete (Account account)
   {
     context.Accounts.Remove(account);
     await context.SaveChangesAsync();

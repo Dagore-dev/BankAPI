@@ -57,7 +57,7 @@ public class AccountController : ControllerBase
     if (validationResult != "Valid")
       return BadRequest(new { message = validationResult });
     
-    accountService.Update(account, accountToUpdate);
+    await accountService.Update(account, accountToUpdate);
     return NoContent();
   }
   [Authorize(Policy = "SuperAdmin")]
@@ -68,7 +68,7 @@ public class AccountController : ControllerBase
     if (accountToDelete is null)
       return AccountNotFound(id);
     
-    accountService.Delete(accountToDelete);
+    await accountService.Delete(accountToDelete);
     return Ok();
   }
 

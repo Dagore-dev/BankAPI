@@ -21,7 +21,7 @@ public class ClientService
 
     return client;
   }
-  public async void Update (Client client, Client clientToUpdate)
+  public async Task Update (Client client, Client clientToUpdate)
   {    
     clientToUpdate.Name = client.Name;
     clientToUpdate.PhoneNumber = client.PhoneNumber;
@@ -29,7 +29,7 @@ public class ClientService
 
     await context.SaveChangesAsync();
   }
-  public async void Delete (Client client)
+  public async Task Delete (Client client)
   {
     context.Clients.Remove(client);
     

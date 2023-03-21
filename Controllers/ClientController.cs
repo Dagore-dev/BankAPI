@@ -45,7 +45,7 @@ public class ClientController : ControllerBase
     if (clientToUpdate is null)
       return ClientNotFound(id);
 
-    clientService.Update(client, clientToUpdate);
+    await clientService.Update(client, clientToUpdate);
     return NoContent();
   }
   [Authorize(Policy = "SuperAdmin")]
@@ -56,7 +56,7 @@ public class ClientController : ControllerBase
     if (clientToDelete is null)
       return ClientNotFound(id);
 
-    clientService.Delete(clientToDelete);
+    await clientService.Delete(clientToDelete);
     return Ok();
   }
   NotFoundObjectResult ClientNotFound (int id)
