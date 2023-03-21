@@ -2,9 +2,11 @@ using Microsoft.AspNetCore.Mvc;
 using BankAPI.Services;
 using BankAPI.Models;
 using BankAPI.DTOs;
+using Microsoft.AspNetCore.Authorization;
 
 namespace BankAPI.Controllers;
 
+[Authorize]
 [ApiController]
 [Route("[controller]")]
 public class AccountController : ControllerBase
