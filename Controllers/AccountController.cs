@@ -31,6 +31,7 @@ public class AccountController : ControllerBase
     
     return account;
   }
+  [Authorize(Policy = "SuperAdmin")]
   [HttpPost]
   public async Task<IActionResult> Create (AccountRequestDTO account)
   {
@@ -41,6 +42,7 @@ public class AccountController : ControllerBase
     Account accountCreated = await accountService.Create(account);
     return CreatedAtAction(nameof(GetById), new { id = accountCreated.Id }, accountCreated);
   }
+  [Authorize(Policy = "SuperAdmin")]
   [HttpPut("{id}")]
   public async Task<IActionResult> Update (int id, AccountRequestDTO account)
   {
@@ -58,6 +60,7 @@ public class AccountController : ControllerBase
     accountService.Update(account, accountToUpdate);
     return NoContent();
   }
+  [Authorize(Policy = "SuperAdmin")]
   [HttpDelete("{id}")]
   public async Task<IActionResult> Delete (int id)
   {

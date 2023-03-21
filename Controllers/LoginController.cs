@@ -39,7 +39,8 @@ public class LoginController: ControllerBase
     var claims = new[]
     {
       new Claim(ClaimTypes.Name, admin.Name),
-      new Claim(ClaimTypes.Email, admin.Email)
+      new Claim(ClaimTypes.Email, admin.Email),
+      new Claim("AdminType", admin.AdminType)
     };
     var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(secret));
     var credentials = new SigningCredentials(key, SecurityAlgorithms.HmacSha512Signature);
